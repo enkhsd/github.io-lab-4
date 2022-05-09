@@ -107,7 +107,7 @@
     <nav id="menu"></nav>
     <div id='map'></div>
     <div class='map-overlay' id='features'>
-        <h2>Hospital Locations in Seattle</h2>
+        <h2>Public Schools Locations in Seattle</h2>
         <div id='text-description'>
             <p>Please click on different layers to explore</p>
         </div>
@@ -127,76 +127,76 @@
 
             map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
             map.addControl(new mapboxgl.ScaleControl(), "bottom-right");
-            map.addSource('Seattle Basemap-tiles', {
+            map.addSource('Base Map-tiles', {
                 'type': 'raster',
                 'tiles': [
-                    'tiles/Base/{z}/{x}/{y}.png'
+                    'tiles/BaseLayer/{z}/{x}/{y}.png'
                 ],
                 'tileSize': 256,
                 'attribution': 'Map tiles designed by Saka Davaajav</a>'
             });
 
-            map.addSource('Hospital Locations-tiles', {
+            map.addSource('School Data-tiles', {
+                'type': 'raster',
+                'tiles': [
+                    'tiles/SchoolData/{z}/{x}/{y}.png'
+                ],
+                'tileSize': 256,
+                'attribution': 'Map tiles designed by Saka Davaajav</a>'
+            });
+
+            map.addSource('Seattle Basemap and School Data-tiles', {
                 'type': 'raster',
                 'tiles': [
                     'tiles/PublicSchools/{z}/{x}/{y}.png'
                 ],
                 'tileSize': 256,
-                'attribution': 'Map tiles designed by Saka Davaajav</a>'
-            });
-
-            map.addSource('Seattle Basemap and Hospital Data-tiles', {
-                'type': 'raster',
-                'tiles': [
-                    'tiles/Seattle Basemap and Hospital Data/{z}/{x}/{y}.png'
-                ],
-                'tileSize': 256,
                 'attribution': 'Map tiles designed by Saka Davaajav'
             });
 
-            map.addSource('Black History Month-tiles', {
+            map.addSource('Uw and Schools-tiles', {
                 'type': 'raster',
                 'tiles': [
-                    'tiles/Black History Month/{z}/{x}/{y}.png'
+                    'tiles/Themed/{z}/{x}/{y}.png'
                 ],
                 'tileSize': 256,
                 'attribution': 'Map tiles designed by Saka Davaajav'
             }); 
 
             map.addLayer({
-                'id': 'Seattle Basemap',
+                'id': 'BaseLayer',
                 'type': 'raster',
                 'layout': {
                     'visibility': 'none'
                 },
-                'source': 'Seattle Basemap-tiles'
+                'source': 'Base Map-tiles'
             });
 
             map.addLayer({
-                'id': 'Hospital Locations',
+                'id': 'SchoolData',
                 'type': 'raster',
                 'layout': {
                     'visibility': 'none'
                 },
-                'source': 'Hospital Locations-tiles'
+                'source': 'School Data-tiles'
             });
 
             map.addLayer({
-                'id': 'Seattle Basemap and Hospital Data',
+                'id': 'PublicSchools',
                 'type': 'raster',
                 'layout': {
                     'visibility': 'none'
                 },
-                'source': 'Seattle Basemap and Hospital Data-tiles'
+                'source': 'Seattle Basemap and School Data-tiles'
             });
 
             map.addLayer({
-                'id': 'Black History Month',
+                'id': 'Themed',
                 'type': 'raster',
                 'layout': {
                     'visibility': 'none'
                 },
-                'source': 'Black History Month-tiles'
+                'source': 'Uw and Schools-tiles'
             });
         });
 
@@ -204,12 +204,12 @@
         // After the last frame rendered before the map enters an "idle" state.
         map.on('idle', () => {
             // If these two layers were not added to the map, abort
-            if (!map.getLayer('Seattle Basemap') || !map.getLayer('Hospital Locations') || !map.getLayer('Seattle Basemap and Hospital Data') || !map.getLayer('Black History Month')) {
+            if (!map.getLayer('BaseLayer') || !map.getLayer('SchoolData') || !map.getLayer('PublicSchools') || !map.getLayer('Themed')) {
                 return;
             }
 
             // Enumerate ids of the layers.
-            const toggleableLayerIds = ['Seattle Basemap', 'Hospital Locations', 'Seattle Basemap and Hospital Data', 'Black History Month'];
+            const toggleableLayerIds = ['BaseLayer', 'SchoolData', 'PublicSchools, 'Themed'];
 
             // Set up the corresponding toggle button for each layer.
             for (const id of toggleableLayerIds) {

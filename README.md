@@ -10,20 +10,28 @@ The url to the [map](https://enkhsd/github.io-lab-4).
 ## Tile - 1
 ![Tile 1](/img/Base.png)
 Geographic Area: Seattle, WA
+
 Available Zoom Levels: 1-14
+
 Description: This is the base map showing Seattle area. The base map was made on Mapbox with monochrome adjusted features.
 ## Tile - 2
 ![Tile 1](/img/SchoolData.png)
 Geographic Area: Seattle, WA
+
 Available Zoom Levels: 1-14
+
 Description: This map is showing Seattle Public Schools Distribution. The data was collected from City of Seattle, Open Data Portal.
 ## Tile - 3
 ![Tile 1](/img/PublicSchools.png)
 Geographic Area: Seattle, WA
+
 Available Zoom Levels: 1-14
+
 Description: This is the map showing Seattle Public Schools in our base map created with Mapbox.
 ## Tile - 4
 ![Tile 1](/img/UWandSchools.png)
 Geographic Area: Seattle, WA
+
 Available Zoom Levels: 1-14
+
 Description: This is the map with theme of UW and schools.
