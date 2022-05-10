@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Map Design</title>
+    <title>Lab 4: Tile Generation Mapping</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css" rel="stylesheet">
@@ -65,40 +65,6 @@
         #menu a.active:hover {
             background: #3074a4;
         }
-
-        h2, h3 {
-            margin: 10px;
-            font-size: 18px;
-        }
-
-        h3 {
-            font-size: 16px;
-        }
-
-        p {
-            margin: 10px;
-        }
-
-        .map-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            background: rgba(255, 255, 255, 0.8);
-            border-style: solid;
-            border-width: 1px;
-            border-color: rgba(0, 0, 0, 0.2);
-            margin-left: 20px;
-            font-family: Arial, sans-serif;
-            overflow: auto;
-            border-radius: 3px;
-        }
-
-        #features {
-            top: 0;
-            height: 125px;
-            margin-top: 20px;
-            width: 250px;
-        }
     </style>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
 </head>
@@ -106,111 +72,102 @@
 <body>
     <nav id="menu"></nav>
     <div id='map'></div>
-    <div class='map-overlay' id='features'>
-        <h2>School Locations in Seattle</h2>
-        <div id='text-description'>
-            <p>Click to explore!</p>
-        </div>
-    </div>
-    <div class='map-overlay' id='legend'></div>
     <script type="text/javascript">
         mapboxgl.accessToken =
-            //'pk.eyJ1IjoiamFrb2J6aGFvIiwiYSI6ImNpcms2YWsyMzAwMmtmbG5icTFxZ3ZkdncifQ.P9MBej1xacybKcDN_jehvw'
-            'pk.eyJ1IjoiZW5raHNkIiwiYSI6ImNsMnh0cThndjBrcnYzY3A4djJ1cjMwbm0ifQ.Nzw01BthSStzn9awheqsng';
+            'pk.eyJ1IjoiamFrb2J6aGFvIiwiYSI6ImNpcms2YWsyMzAwMmtmbG5icTFxZ3ZkdncifQ.P9MBej1xacybKcDN_jehvw';
         let map = new mapboxgl.Map({
             container: 'map', // container ID
             style: 'mapbox://styles/mapbox/dark-v10',
-            zoom: 12, // starting zoom
+            zoom: 11.7, // starting zoom
             center: [-122.2559435, 47.6002614] // starting center
         });
 
         map.on('load', () => { //simplifying the function statement: arrow with brackets to define a function
 
-            map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
-            map.addControl(new mapboxgl.ScaleControl(), "bottom-right");
-            map.addSource('Seattle Basemap-tiles', {
-                'type': 'raster',
-                'tiles': [
-                    'tiles/Seattle Basemap/{z}/{x}/{y}.png'
-                ],
-                'tileSize': 256,
-                'attribution': 'Map tiles designed by Saka Davaajav</a>'
-            });
-
-            map.addSource('School Locations-tiles', {
+            map.addSource('school-tiles', {
                 'type': 'raster',
                 'tiles': [
                     'tiles/School Locations/{z}/{x}/{y}.png'
                 ],
                 'tileSize': 256,
-                'attribution': 'Map tiles designed by Saka Davaajav</a>'
+                'attribution': 'Map tiles designed by Saka Davaajav'
             });
 
-            map.addSource('Seattle Basemap and School Data-tiles', {
+            map.addSource('basemap-tiles', {
                 'type': 'raster',
                 'tiles': [
-                    'tiles/Seattle Basemap and School Data/{z}/{x}/{y}.png'
+                    'tiles/Seattle Basemap/{z}/{x}/{y}.png'
                 ],
                 'tileSize': 256,
                 'attribution': 'Map tiles designed by Saka Davaajav'
             });
 
-            map.addSource('Uw and Schools-tiles', {
+            map.addSource('basemap and data-tiles', {
                 'type': 'raster',
                 'tiles': [
-                    'tiles/Uw and Schools/{z}/{x}/{y}.png'
+                'tiles/Seattle Basemap and School Data/{z}/{x}/{y}.png'
+                ],
+                'tileSize': 256,
+                'attribution': 'Map tiles designed by Saka Davaajav'
+            });
+
+            map.addSource('Theme-tiles', {
+                'type': 'raster',
+                'tiles': [
+                'tiles/Uw and Schools/{z}/{x}/{y}.png'
                 ],
                 'tileSize': 256,
                 'attribution': 'Map tiles designed by Saka Davaajav'
             });
 
             map.addLayer({
-                'id': 'Seattle Basemap',
+                'id': 'public school-dataset',
                 'type': 'raster',
                 'layout': {
                     'visibility': 'none'
                 },
-                'source': 'Seattle Basemap-tiles'
+                'source': 'school-tiles'
             });
 
             map.addLayer({
-                'id': 'School Locations',
+                'id': 'basemap',
                 'type': 'raster',
                 'layout': {
                     'visibility': 'none'
                 },
-                'source': 'School Locations-tiles'
+                'source': 'basemap-tiles'
             });
 
             map.addLayer({
-                'id': 'Seattle Basemap and School Data',
+                'id': 'basemap-data',
                 'type': 'raster',
                 'layout': {
                     'visibility': 'none'
                 },
-                'source': 'Seattle Basemap and School Data-tiles'
+                'source': 'basemap and data-tiles'
             });
 
             map.addLayer({
-                'id': 'Uw and School',
+                'id': 'uw-school',
                 'type': 'raster',
                 'layout': {
                     'visibility': 'none'
                 },
-                'source': 'Uw and School-tiles'
+                'source': 'Theme-tiles'
             });
+
         });
 
 
         // After the last frame rendered before the map enters an "idle" state.
         map.on('idle', () => {
             // If these two layers were not added to the map, abort
-            if (!map.getLayer('Seattle Basemap') || !map.getLayer('School Locations') || !map.getLayer('Seattle Basemap and School Data') || !map.getLayer('Uw and School')) {
+        if (!map.getLayer('public school-dataset') || !map.getLayer('basemap') || !map.getLayer('basemap-data') || !map.getLayer('uw-school')) {
                 return;
             }
 
             // Enumerate ids of the layers.
-            const toggleableLayerIds = ['Seattle Basemap', 'School Locations', 'Seattle Basemap and School Data', 'Uw and School'];
+            const toggleableLayerIds = ['basemap', 'public school-dataset', 'basemap-data', 'uw-school'];
 
             // Set up the corresponding toggle button for each layer.
             for (const id of toggleableLayerIds) {
