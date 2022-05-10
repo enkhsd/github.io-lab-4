@@ -111,7 +111,7 @@
                 'attribution': 'Map tiles designed by Saka Davaajav'
             });
 
-            map.addSource('Theme-tiles', {
+            map.addSource('theme-tiles', {
                 'type': 'raster',
                 'tiles': [
                 'tiles/Uw and Schools/{z}/{x}/{y}.png'
@@ -130,7 +130,7 @@
             });
 
             map.addLayer({
-                'id': 'basemap',
+                'id': ' seattle-basemap',
                 'type': 'raster',
                 'layout': {
                     'visibility': 'none'
@@ -153,7 +153,7 @@
                 'layout': {
                     'visibility': 'none'
                 },
-                'source': 'Theme-tiles'
+                'source': 'theme-tiles'
             });
 
         });
@@ -162,12 +162,12 @@
         // After the last frame rendered before the map enters an "idle" state.
         map.on('idle', () => {
             // If these two layers were not added to the map, abort
-        if (!map.getLayer('public school-dataset') || !map.getLayer('basemap') || !map.getLayer('basemap-data') || !map.getLayer('uw-school')) {
+        if (!map.getLayer('public school-dataset') || !map.getLayer('seattle-basemap') || !map.getLayer('basemap-data') || !map.getLayer('uw-school')) {
                 return;
             }
 
             // Enumerate ids of the layers.
-            const toggleableLayerIds = ['basemap', 'public school-dataset', 'basemap-data', 'uw-school'];
+            const toggleableLayerIds = ['seattle-basemap', 'public school-dataset', 'basemap-data', 'uw-school'];
 
             // Set up the corresponding toggle button for each layer.
             for (const id of toggleableLayerIds) {
